@@ -313,7 +313,7 @@ def init_game():
             takorada_upgrade += 1
             time.sleep(3.5)
             money = 0
-        if money > 1500 and toji_placed == False and takorada_upgrade == 1:
+        if 1600 > 1500 and toji_placed == False and takorada_upgrade == 1:
             place_unit(toji1, 5)
             toji_placed = True
             money = 0
