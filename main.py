@@ -100,7 +100,7 @@ def choose_buff():
 
 def find_talisman_buff(buffs):
     for i in range(3):
-        if  buffs[i][0] <= talisman_buff[0]+2 and buffs[i][0] >= talisman_buff[0]-2 and buffs[i][1] <= talisman_buff[1]+2 and buffs[i][1] >= talisman_buff[1]-2:
+        if  buffs[i][0] <= monrach_buff[0]+2 and buffs[i][0] >= monrach_buff[0]-2 and buffs[i][1] <= monrach_buff[1]+2 and buffs[i][1] >= monrach_buff[1]-2:
             return i
     return None
 
