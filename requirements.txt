@@ -1,0 +1,8 @@
+keyboard
+pyautogui
+pyautoit
+pillow
+pytesseract
+opencv-python
+numpy
+regex
