@@ -399,6 +399,38 @@ while(True):
             print("enabled")
             time.sleep(2)
     if enabled:
+        if game_did_fail() == True:
+                    if global_ability() == True:
+                        continue
+                    game_start = True
+                    game_started = False
+                    boss_is_out = False
+                    talisman_needed = False
+                    toji_on_spear = False
+                    #unit stanje
+                    takorada_upgrade = 0
+
+                    takorada_placed = False
+                    alucard_placed = False
+                    gojo_placed = False
+                    julius_placed = False
+                    toji_placed = False
+                    sukuna_placed = False
+
+                    #uzete kartice
+                    dodge_amount = 0
+                    strong_amount = 0
+                    press_amount = 0
+                    speed_amount = 0
+                    alucard_upgrade = 0
+                    gojo_upgrade = 0
+                    toji_upgrade = 0
+                    sukuna_upgrade = 0
+                    julius_upgrade = 0
+
+                    mouse_click_at(1176, 821)
+                    time.sleep(0.1)
+                    continue
         if restart:
             restart_game()
             restart = False
