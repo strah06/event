@@ -7,7 +7,10 @@ import pytesseract
 import cv2
 import numpy as np
 import regex as re
+import requests
+import os
 
+discord_webhook = "https://discord.com/api/webhooks/1310981065518743583/m4hon93xL7Dt2SedL8smswz3bT7s_Wo4x_6OKrQ3ZO5_cEV4rAFCgaMD5jFDmoA8ccFf"
 
 #kartice sa pocetka
 renge_dmg = 254, 126, 34
@@ -60,6 +63,19 @@ normal_boss = 160,13,16
 shielded_boss = 181,181,0
 talisman_boss = 122,23,181
 no_boss = 115, 102, 84
+
+#stage
+uradeni_stage = 0
+
+def screenshot():
+    image = ImageGrab.grab()
+    screenshot_path = "screenshot.png"
+    image.save(screenshot_path)
+    return screenshot_path
+
+def send_to_discord(file_path):
+    requests.post(discord_webhook, files={"file": open(file_path, "rb")})
+    os.remove(file_path)
 
 def mouse_click_at(x,y):
     autoit.mouse_move(x,y)
@@ -476,6 +492,9 @@ while(True):
                     toji_upgrade = 0
                     sukuna_upgrade = 0
                     julius_upgrade = 0
+
+                    uradeni_stage += 1
+                    send_to_discord(screenshot())
 
                     mouse_click_at(1176, 821)
                     time.sleep(0.1)
