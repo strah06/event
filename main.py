@@ -58,7 +58,7 @@ sukuna_placed = False
 #uzete kartice
 dodge_amount = 0
 strong_amount = 0
-press_amount = 0
+press_or_uncommon_amount = 0
 speed_amount = 0
 
 #bossevi
