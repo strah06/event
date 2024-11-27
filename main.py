@@ -10,8 +10,6 @@ import regex as re
 import requests
 import os
 
-discord_webhook = "https://discord.com/api/webhooks/1310981065518743583/m4hon93xL7Dt2SedL8smswz3bT7s_Wo4x_6OKrQ3ZO5_cEV4rAFCgaMD5jFDmoA8ccFf"
-
 #kartice sa pocetka
 renge_dmg = 254, 126, 34
 talisman_buff = 194, 194, 254
@@ -21,14 +19,21 @@ money_surge = 254, 221, 34
 
 #kartice za buffovanje
 strong_or_dmg = 254, 62, 65
-slayer = 154, 71, 254
+slayer = 153, 71, 254
 speed = 0, 115, 254
-press = 90, 254, 112
-cooldown = 43, 173, 254
-dodge = 203, 237, 254
+press_or_uncommon = 90, 254, 112
+cooldown = 43, 174, 254
+dodge = 204, 237, 254
 rangee = 255, 254, 124
 harvest = 114, 207, 254
 mini_boss = 254, 0, 42
+planning_ahed = 103, 0, 221
+
+confirm_strong = 83, 29, 30
+confirm_strong2 = 166, 57, 59
+
+confirm_press_it = 59, 166, 73
+confirm_press_it2 = 29, 83, 36
 
 #unit koordinate
 takorada = (1513, 666)
@@ -223,71 +228,91 @@ def auto_ability(unit):
     mouse_click_at(1791, 935)
 
 def choose_card():
-    global dodge_amount,strong_amount,press_amount,speed_amount
+    global dodge_amount,strong_amount,press_or_uncommon_amount,speed_amount
     x = [657,885,1117]
     y = [368,368,368]
 
+    x1 = [631,860,1089]
+    y1 = [561,561,561]
+
+    x2 = [719,948,1177]
+    y2 = [383,383,383]
+
     buffs = {}
+    is_strong = {}
+    is_press_it = {}
 
     for i in range(3):
         buffs[i] = pag.pixel(x[i], y[i])
+    for i in range(3):
+        is_strong[i] = pag.pixel(x1[i], y1[i])
+    for i in range(3):
+        is_press_it[i] = pag.pixel(x2[i], y2[i])
+
+    print(is_strong)
 
 
     #harvest
     for i in range(3):
-        if buffs[i][0] <= harvest[0]+2 and buffs[i][0] >= harvest[0]-2 and buffs[i][1] <= harvest[1]+2 and buffs[i][1] >= harvest[1]-2:
-            mouse_click_at(x[i], y[i]+10)
-            time.sleep(0.7)
-            return True
-    #press
-    for i in range(3):
-        if  press_amount < 3 and buffs[i][0] <= press[0]+2 and buffs[i][0] >= press[0]-2 and buffs[i][1] <= press[1]+2 and buffs[i][1] >= press[1]-2:
-            press_amount+=1
+        if buffs[i][0] <= harvest[0]+2 and buffs[i][0] >= harvest[0]-2 and buffs[i][1] <= harvest[1]+2 and buffs[i][1] >= harvest[1]-2 and buffs[i][2] <= harvest[2]+2 and buffs[i][2] >= harvest[2]-2:
             mouse_click_at(x[i], y[i]+10)
             time.sleep(0.7)
             return True
     #boss
     for i in range(3):
-        if buffs[i][0] <= mini_boss[0]+2 and buffs[i][0] >= mini_boss[0]-2 and buffs[i][1] <= mini_boss[1]+2 and buffs[i][1] >= mini_boss[1]-2:
+        if buffs[i][0] <= mini_boss[0]+2 and buffs[i][0] >= mini_boss[0]-2 and buffs[i][1] <= mini_boss[1]+2 and buffs[i][1] >= mini_boss[1]-2 and buffs[i][2] <= mini_boss[2]+2 and buffs[i][2] >= mini_boss[2]-2:
             mouse_click_at(x[i], y[i]+10)
             time.sleep(0.7)
             return True
     #speed
     for i in range(3):
-        if speed_amount < 4 and buffs[i][0] <= speed[0]+2 and buffs[i][0] >= speed[0]-2 and buffs[i][1] <= speed[1]+2 and buffs[i][1] >= speed[1]-2:
+        if speed_amount < 4 and buffs[i][0] <= speed[0]+2 and buffs[i][0] >= speed[0]-2 and buffs[i][1] <= speed[1]+2 and buffs[i][1] >= speed[1]-2 and buffs[i][2] <= speed[2]+2 and buffs[i][2] >= speed[2]-2:
             speed_amount+=1
             mouse_click_at(x[i], y[i]+10)
             time.sleep(0.7)
             return True
     #strong
     for i in range(3):
-        if strong_amount < 4 and buffs[i][0] <= strong_or_dmg[0]+2 and buffs[i][0] >= strong_or_dmg[0]-2 and buffs[i][1] <= strong_or_dmg[1]+2 and buffs[i][1] >= strong_or_dmg[1]-2:
+        if strong_amount < 4 and buffs[i][0] <= strong_or_dmg[0]+2 and buffs[i][0] >= strong_or_dmg[0]-2 and buffs[i][1] <= strong_or_dmg[1]+2 and buffs[i][1] >= strong_or_dmg[1]-2 and buffs[i][2] <= strong_or_dmg[2]+2 and buffs[i][2] >= strong_or_dmg[2]-2 and ((is_strong[i][0] <= confirm_strong[0]+2 and is_strong[i][0] >= confirm_strong[0]-2 and is_strong[i][1] <= confirm_strong[1]+2 and is_strong[i][1] >= confirm_strong[1]-2 and is_strong[i][2] <= confirm_strong[2]+2 and is_strong[i][2] >= confirm_strong[2]-2) or (is_strong[i][0] <= confirm_strong2[0]+2 and is_strong[i][0] >= confirm_strong2[0]-2 and is_strong[i][1] <= confirm_strong2[1]+2 and is_strong[i][1] >= confirm_strong2[1]-2 and is_strong[i][2] <= confirm_strong2[2]+2 and is_strong[i][2] >= confirm_strong2[2]-2)):
             strong_amount+=1
             mouse_click_at(x[i], y[i]+10)
             time.sleep(0.7)
             return True
     #dodge
     for i in range(3):
-        if  dodge_amount < 3 and buffs[i][0] <= dodge[0]+2 and buffs[i][0] >= dodge[0]-2 and buffs[i][1] <= dodge[1]+2 and buffs[i][1] >= dodge[1]-2:
+        if  dodge_amount < 3 and buffs[i][0] <= dodge[0]+2 and buffs[i][0] >= dodge[0]-2 and buffs[i][1] <= dodge[1]+2 and buffs[i][1] >= dodge[1]-2 and buffs[i][2] <= dodge[2]+2 and buffs[i][2] >= dodge[2]-2:
             dodge_amount+=1
+            mouse_click_at(x[i], y[i]+10)
+            time.sleep(0.7)
+            return True
+    #press
+    for i in range(3):
+        if  press_or_uncommon_amount < 3 and buffs[i][0] <= press_or_uncommon[0]+2 and buffs[i][0] >= press_or_uncommon[0]-2 and buffs[i][1] <= press_or_uncommon[1]+2 and buffs[i][1] >= press_or_uncommon[1]-2 and buffs[i][2] <= press_or_uncommon[2]+2 and buffs[i][2] >= press_or_uncommon[2]-2 and ((is_press_it[i][0] <= confirm_press_it[0]+2 and is_press_it[i][0] >= confirm_press_it[0]-2 and is_press_it[i][1] <= confirm_press_it[1]+2 and is_press_it[i][1] >= confirm_press_it[1]-2 and is_press_it[i][2] <= confirm_press_it[2]+2 and is_press_it[i][2] >= confirm_press_it[2]-2) or (is_press_it[i][0] <= confirm_press_it2[0]+2 and is_press_it[i][0] >= confirm_press_it2[0]-2 and is_press_it[i][1] <= confirm_press_it2[1]+2 and is_press_it[i][1] >= confirm_press_it2[1]-2 and is_press_it[i][2] <= confirm_press_it2[2]+2 and is_press_it[i][2] >= confirm_press_it2[2]-2)):
+            press_or_uncommon_amount+=1
+            mouse_click_at(x[i], y[i]+10)
+            time.sleep(0.7)
+            return True
+    #dmg
+    for i in range(3):
+        if buffs[i][0] <= strong_or_dmg[0]+2 and buffs[i][0] >= strong_or_dmg[0]-2 and buffs[i][1] <= strong_or_dmg[1]+2 and buffs[i][1] >= strong_or_dmg[1]-2 and buffs[i][2] <= strong_or_dmg[2]+2 and buffs[i][2] >= strong_or_dmg[2]-2:
             mouse_click_at(x[i], y[i]+10)
             time.sleep(0.7)
             return True
     #slayer
     for i in range(3):
-        if buffs[i][0] <= slayer[0]+2 and buffs[i][0] >= slayer[0]-2 and buffs[i][1] <= slayer[1]+2 and buffs[i][1] >= slayer[1]-2:
+        if buffs[i][0] <= slayer[0]+2 and buffs[i][0] >= slayer[0]-2 and buffs[i][1] <= slayer[1]+2 and buffs[i][1] >= slayer[1]-2 and buffs[i][2] <= slayer[2]+2 and buffs[i][2] >= slayer[2]-2:
             mouse_click_at(x[i], y[i]+10)
             time.sleep(0.7)
             return True
     #range
     for i in range(3):
-        if buffs[i][0] <= rangee[0]+2 and buffs[i][0] >= rangee[0]-2 and buffs[i][1] <= rangee[1]+2 and buffs[i][1] >= rangee[1]-2:
+        if buffs[i][0] <= rangee[0]+2 and buffs[i][0] >= rangee[0]-2 and buffs[i][1] <= rangee[1]+2 and buffs[i][1] >= rangee[1]-2 and buffs[i][2] <= rangee[2]+2 and buffs[i][2] >= rangee[2]-2:
             mouse_click_at(x[i], y[i]+10)
             time.sleep(0.7)
             return True
     #cooldown
     for i in range(3):
-        if buffs[i][0] <= cooldown[0]+2 and buffs[i][0] >= cooldown[0]-2 and buffs[i][1] <= cooldown[1]+2 and buffs[i][1] >= cooldown[1]-2:
+        if buffs[i][0] <= cooldown[0]+2 and buffs[i][0] >= cooldown[0]-2 and buffs[i][1] <= cooldown[1]+2 and buffs[i][1] >= cooldown[1]-2 and buffs[i][2] <= cooldown[2]+2 and buffs[i][2] >= cooldown[2]-2:
             mouse_click_at(x[i], y[i]+10)
             time.sleep(0.7)
             return True
@@ -494,7 +519,6 @@ while(True):
                     julius_upgrade = 0
 
                     uradeni_stage += 1
-                    send_to_discord(screenshot())
 
                     mouse_click_at(1176, 821)
                     time.sleep(0.1)
