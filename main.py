@@ -35,6 +35,11 @@ confirm_strong2 = 166, 57, 59
 confirm_press_it = 59, 166, 73
 confirm_press_it2 = 29, 83, 36
 
+debuff_last = False
+
+card_out_checker_pos = 1888, 544
+card_out_checker = 153, 53, 55
+
 #unit koordinate
 takorada = (1513, 666)
 toji1 = (881, 521)
@@ -72,16 +77,6 @@ no_boss = 115, 102, 84
 #stage
 uradeni_stage = 0
 
-def screenshot():
-    image = ImageGrab.grab()
-    screenshot_path = "screenshot.png"
-    image.save(screenshot_path)
-    return screenshot_path
-
-def send_to_discord(file_path):
-    requests.post(discord_webhook, files={"file": open(file_path, "rb")})
-    os.remove(file_path)
-
 def mouse_click_at(x,y):
     autoit.mouse_move(x,y)
     autoit.mouse_click("left")
@@ -98,7 +93,7 @@ def choose_buff():
     talisman_buff_position = find_talisman_buff(buffs)
 
     if talisman_buff_position != None:
-        mouse_click_at(x[talisman_buff_position], y[talisman_buff_position]+10)
+        mouse_click_at(x[talisman_buff_position], y[talisman_buff_position]+10, True)
         return True
     return False
 
@@ -110,19 +105,19 @@ def find_talisman_buff(buffs):
     return None
 
 def restart_game():
-    mouse_click_at(973, 541)
+    mouse_click_at(973, 541, True)
     time.sleep(0.5)
-    mouse_click_at(886, 199)
+    mouse_click_at(886, 199, True)
     time.sleep(6)
-    mouse_click_at(30, 1009)
+    mouse_click_at(30, 1009, True)
     time.sleep(0.5)
-    mouse_click_at(1202, 498)
+    mouse_click_at(1202, 498, True)
     time.sleep(0.5)
-    mouse_click_at(849, 557)
+    mouse_click_at(849, 557, True)
     time.sleep(0.5)
-    mouse_click_at(968, 567)
+    mouse_click_at(968, 567, True)
     time.sleep(0.5)
-    mouse_click_at(1316, 182)
+    mouse_click_at(1316, 182, True)
     time.sleep(0.5)
 
 #gpt goat
@@ -228,7 +223,7 @@ def auto_ability(unit):
     mouse_click_at(1791, 935)
 
 def choose_card():
-    global dodge_amount,strong_amount,press_or_uncommon_amount,speed_amount
+    global dodge_amount,strong_amount,press_or_uncommon_amount,speed_amount,debuff_last
     x = [657,885,1117]
     y = [368,368,368]
 
@@ -242,6 +237,15 @@ def choose_card():
     is_strong = {}
     is_press_it = {}
 
+    pixel = pag.pixel(1888, 544)
+
+    if pixel[0] <= card_out_checker[0]+2 and pixel[0] >= card_out_checker[0]-2 and pixel[1] <= card_out_checker[1]+2 and pixel[1] >= card_out_checker[1]-2 and pixel[2] <= card_out_checker[2]+2 and pixel[2] >= card_out_checker[2]-2:
+        print("Krecu kartice")
+        autoit.mouse_move(1791, 935)
+        time.sleep(0.7)
+    else:
+        return False
+
     for i in range(3):
         buffs[i] = pag.pixel(x[i], y[i])
     for i in range(3):
@@ -249,73 +253,172 @@ def choose_card():
     for i in range(3):
         is_press_it[i] = pag.pixel(x2[i], y2[i])
 
-    print(is_strong)
+    if buffs[0][0] <= harvest[0]+2 and buffs[0][0] >= harvest[0]-2 and buffs[0][1] <= harvest[1]+2 and buffs[0][1] >= harvest[1]-2 and buffs[0][2] <= harvest[2]+2 and buffs[0][2] >= harvest[2]-2:
+        time.sleep(1)
+        print("prepoznat harvest, uzimaju se nove slike")
+        for i in range(3):
+            buffs[i] = pag.pixel(x[i], y[i])
+        for i in range(3):
+            is_strong[i] = pag.pixel(x1[i], y1[i])
+        for i in range(3):
+            is_press_it[i] = pag.pixel(x2[i], y2[i])
+        print(buffs)
+    elif buffs[0][0] <= mini_boss[0]+2 and buffs[0][0] >= mini_boss[0]-2 and buffs[0][1] <= mini_boss[1]+2 and buffs[0][1] >= mini_boss[1]-2 and buffs[0][2] <= mini_boss[2]+2 and buffs[0][2] >= mini_boss[2]-2:
+        time.sleep(1)
+        print("prepoznat champion, uzimaju se nove slike")
+        for i in range(3):
+            buffs[i] = pag.pixel(x[i], y[i])
+        for i in range(3):
+            is_strong[i] = pag.pixel(x1[i], y1[i])
+        for i in range(3):
+            is_press_it[i] = pag.pixel(x2[i], y2[i])
+        print(buffs)
+    elif buffs[0][0] <= speed[0]+2 and buffs[0][0] >= speed[0]-2 and buffs[0][1] <= speed[1]+2 and buffs[0][1] >= speed[1]-2 and buffs[0][2] <= speed[2]+2 and buffs[0][2] >= speed[2]-2:
+        time.sleep(1)
+        print("prepoznat speed, uzimaju se nove slike")
+        for i in range(3):
+            buffs[i] = pag.pixel(x[i], y[i])
+        for i in range(3):
+            is_strong[i] = pag.pixel(x1[i], y1[i])
+        for i in range(3):
+            is_press_it[i] = pag.pixel(x2[i], y2[i])
+        print(buffs)
+    elif buffs[0][0] <= strong_or_dmg[0]+2 and buffs[0][0] >= strong_or_dmg[0]-2 and buffs[0][1] <= strong_or_dmg[1]+2 and buffs[0][1] >= strong_or_dmg[1]-2 and buffs[0][2] <= strong_or_dmg[2]+2 and buffs[0][2] >= strong_or_dmg[2]-2:
+        time.sleep(1)
+        print("prepoznat strong ili dmg, uzimaju se nove slike")
+        for i in range(3):
+            buffs[i] = pag.pixel(x[i], y[i])
+        for i in range(3):
+            is_strong[i] = pag.pixel(x1[i], y1[i])
+        for i in range(3):
+            is_press_it[i] = pag.pixel(x2[i], y2[i])
+        print(buffs)
+    elif buffs[0][0] <= dodge[0]+2 and buffs[0][0] >= dodge[0]-2 and buffs[0][1] <= dodge[1]+2 and buffs[0][1] >= dodge[1]-2 and buffs[0][2] <= dodge[2]+2 and buffs[0][2] >= dodge[2]-2:
+        time.sleep(1)
+        print("prepoznat dodge, uzimaju se nove slike")
+        for i in range(3):
+            buffs[i] = pag.pixel(x[i], y[i])
+        for i in range(3):
+            is_strong[i] = pag.pixel(x1[i], y1[i])
+        for i in range(3):
+            is_press_it[i] = pag.pixel(x2[i], y2[i])
+        print(buffs)
+    elif buffs[0][0] <= press_or_uncommon[0]+2 and buffs[0][0] >= press_or_uncommon[0]-2 and buffs[0][1] <= press_or_uncommon[1]+2 and buffs[0][1] >= press_or_uncommon[1]-2 and buffs[0][2] <= press_or_uncommon[2]+2 and buffs[0][2] >= press_or_uncommon[2]-2:
+        time.sleep(1)
+        print("prepoznat press, uzimaju se nove slike")
+        for i in range(3):
+            buffs[i] = pag.pixel(x[i], y[i])
+        for i in range(3):
+            is_strong[i] = pag.pixel(x1[i], y1[i])
+        for i in range(3):
+            is_press_it[i] = pag.pixel(x2[i], y2[i])
+        print(buffs)
+    elif buffs[0][0] <= slayer[0]+2 and buffs[0][0] >= slayer[0]-2 and buffs[0][1] <= slayer[1]+2 and buffs[0][1] >= slayer[1]-2 and buffs[0][2] <= slayer[2]+2 and buffs[0][2] >= slayer[2]-2:
+        time.sleep(1)
+        print("prepoznat slayer, uzimaju se nove slike")
+        for i in range(3):
+            buffs[i] = pag.pixel(x[i], y[i])
+        for i in range(3):
+            is_strong[i] = pag.pixel(x1[i], y1[i])
+        for i in range(3):
+            is_press_it[i] = pag.pixel(x2[i], y2[i])
+        print(buffs)
+    elif buffs[0][0] <= rangee[0]+2 and buffs[0][0] >= rangee[0]-2 and buffs[0][1] <= rangee[1]+2 and buffs[0][1] >= rangee[1]-2 and buffs[0][2] <= rangee[2]+2 and buffs[0][2] >= rangee[2]-2:
+        time.sleep(1)
+        print("prepoznat range, uzimaju se nove slike")
+        for i in range(3):
+            buffs[i] = pag.pixel(x[i], y[i])
+        for i in range(3):
+            is_strong[i] = pag.pixel(x1[i], y1[i])
+        for i in range(3):
+            is_press_it[i] = pag.pixel(x2[i], y2[i])
+        print(buffs)
+    elif buffs[0][0] <= cooldown[0]+2 and buffs[0][0] >= cooldown[0]-2 and buffs[0][1] <= cooldown[1]+2 and buffs[0][1] >= cooldown[1]-2 and buffs[0][2] <= cooldown[2]+2 and buffs[0][2] >= cooldown[2]-2:
+        time.sleep(1)
+        print("prepoznat cooldown, uzimaju se nove slike")
+        for i in range(3):
+            buffs[i] = pag.pixel(x[i], y[i])
+        for i in range(3):
+            is_strong[i] = pag.pixel(x1[i], y1[i])
+        for i in range(3):
+            is_press_it[i] = pag.pixel(x2[i], y2[i])
+        print(buffs)
 
+    print(dodge_amount,strong_amount,press_or_uncommon_amount,speed_amount,debuff_last)
 
     #harvest
     for i in range(3):
         if buffs[i][0] <= harvest[0]+2 and buffs[i][0] >= harvest[0]-2 and buffs[i][1] <= harvest[1]+2 and buffs[i][1] >= harvest[1]-2 and buffs[i][2] <= harvest[2]+2 and buffs[i][2] >= harvest[2]-2:
-            mouse_click_at(x[i], y[i]+10)
+            debuff_last = False
+            mouse_click_at(x[i], y[i]+10, True)
             time.sleep(0.7)
             return True
     #boss
     for i in range(3):
         if buffs[i][0] <= mini_boss[0]+2 and buffs[i][0] >= mini_boss[0]-2 and buffs[i][1] <= mini_boss[1]+2 and buffs[i][1] >= mini_boss[1]-2 and buffs[i][2] <= mini_boss[2]+2 and buffs[i][2] >= mini_boss[2]-2:
-            mouse_click_at(x[i], y[i]+10)
+            mouse_click_at(x[i], y[i]+10, True)
             time.sleep(0.7)
             return True
     #speed
     for i in range(3):
-        if speed_amount < 4 and buffs[i][0] <= speed[0]+2 and buffs[i][0] >= speed[0]-2 and buffs[i][1] <= speed[1]+2 and buffs[i][1] >= speed[1]-2 and buffs[i][2] <= speed[2]+2 and buffs[i][2] >= speed[2]-2:
+        if debuff_last == False and speed_amount < 3 and buffs[i][0] <= speed[0]+2 and buffs[i][0] >= speed[0]-2 and buffs[i][1] <= speed[1]+2 and buffs[i][1] >= speed[1]-2 and buffs[i][2] <= speed[2]+2 and buffs[i][2] >= speed[2]-2:
             speed_amount+=1
-            mouse_click_at(x[i], y[i]+10)
+            mouse_click_at(x[i], y[i]+10, True)
             time.sleep(0.7)
             return True
     #strong
     for i in range(3):
-        if strong_amount < 4 and buffs[i][0] <= strong_or_dmg[0]+2 and buffs[i][0] >= strong_or_dmg[0]-2 and buffs[i][1] <= strong_or_dmg[1]+2 and buffs[i][1] >= strong_or_dmg[1]-2 and buffs[i][2] <= strong_or_dmg[2]+2 and buffs[i][2] >= strong_or_dmg[2]-2 and ((is_strong[i][0] <= confirm_strong[0]+2 and is_strong[i][0] >= confirm_strong[0]-2 and is_strong[i][1] <= confirm_strong[1]+2 and is_strong[i][1] >= confirm_strong[1]-2 and is_strong[i][2] <= confirm_strong[2]+2 and is_strong[i][2] >= confirm_strong[2]-2) or (is_strong[i][0] <= confirm_strong2[0]+2 and is_strong[i][0] >= confirm_strong2[0]-2 and is_strong[i][1] <= confirm_strong2[1]+2 and is_strong[i][1] >= confirm_strong2[1]-2 and is_strong[i][2] <= confirm_strong2[2]+2 and is_strong[i][2] >= confirm_strong2[2]-2)):
+        if debuff_last == False and strong_amount < 3 and buffs[i][0] <= strong_or_dmg[0]+2 and buffs[i][0] >= strong_or_dmg[0]-2 and buffs[i][1] <= strong_or_dmg[1]+2 and buffs[i][1] >= strong_or_dmg[1]-2 and buffs[i][2] <= strong_or_dmg[2]+2 and buffs[i][2] >= strong_or_dmg[2]-2 and ((is_strong[i][0] <= confirm_strong[0]+2 and is_strong[i][0] >= confirm_strong[0]-2 and is_strong[i][1] <= confirm_strong[1]+2 and is_strong[i][1] >= confirm_strong[1]-2 and is_strong[i][2] <= confirm_strong[2]+2 and is_strong[i][2] >= confirm_strong[2]-2) or (is_strong[i][0] <= confirm_strong2[0]+2 and is_strong[i][0] >= confirm_strong2[0]-2 and is_strong[i][1] <= confirm_strong2[1]+2 and is_strong[i][1] >= confirm_strong2[1]-2 and is_strong[i][2] <= confirm_strong2[2]+2 and is_strong[i][2] >= confirm_strong2[2]-2)):
             strong_amount+=1
-            mouse_click_at(x[i], y[i]+10)
+            mouse_click_at(x[i], y[i]+10, True)
             time.sleep(0.7)
             return True
     #dodge
     for i in range(3):
-        if  dodge_amount < 3 and buffs[i][0] <= dodge[0]+2 and buffs[i][0] >= dodge[0]-2 and buffs[i][1] <= dodge[1]+2 and buffs[i][1] >= dodge[1]-2 and buffs[i][2] <= dodge[2]+2 and buffs[i][2] >= dodge[2]-2:
+        if  debuff_last == False and dodge_amount < 1 and buffs[i][0] <= dodge[0]+2 and buffs[i][0] >= dodge[0]-2 and buffs[i][1] <= dodge[1]+2 and buffs[i][1] >= dodge[1]-2 and buffs[i][2] <= dodge[2]+2 and buffs[i][2] >= dodge[2]-2:
             dodge_amount+=1
-            mouse_click_at(x[i], y[i]+10)
+            mouse_click_at(x[i], y[i]+10, True)
             time.sleep(0.7)
             return True
     #press
     for i in range(3):
         if  press_or_uncommon_amount < 3 and buffs[i][0] <= press_or_uncommon[0]+2 and buffs[i][0] >= press_or_uncommon[0]-2 and buffs[i][1] <= press_or_uncommon[1]+2 and buffs[i][1] >= press_or_uncommon[1]-2 and buffs[i][2] <= press_or_uncommon[2]+2 and buffs[i][2] >= press_or_uncommon[2]-2 and ((is_press_it[i][0] <= confirm_press_it[0]+2 and is_press_it[i][0] >= confirm_press_it[0]-2 and is_press_it[i][1] <= confirm_press_it[1]+2 and is_press_it[i][1] >= confirm_press_it[1]-2 and is_press_it[i][2] <= confirm_press_it[2]+2 and is_press_it[i][2] >= confirm_press_it[2]-2) or (is_press_it[i][0] <= confirm_press_it2[0]+2 and is_press_it[i][0] >= confirm_press_it2[0]-2 and is_press_it[i][1] <= confirm_press_it2[1]+2 and is_press_it[i][1] >= confirm_press_it2[1]-2 and is_press_it[i][2] <= confirm_press_it2[2]+2 and is_press_it[i][2] >= confirm_press_it2[2]-2)):
             press_or_uncommon_amount+=1
-            mouse_click_at(x[i], y[i]+10)
+            debuff_last = False
+            mouse_click_at(x[i], y[i]+10, True)
             time.sleep(0.7)
             return True
     #dmg
     for i in range(3):
         if buffs[i][0] <= strong_or_dmg[0]+2 and buffs[i][0] >= strong_or_dmg[0]-2 and buffs[i][1] <= strong_or_dmg[1]+2 and buffs[i][1] >= strong_or_dmg[1]-2 and buffs[i][2] <= strong_or_dmg[2]+2 and buffs[i][2] >= strong_or_dmg[2]-2:
-            mouse_click_at(x[i], y[i]+10)
+            debuff_last = False
+            mouse_click_at(x[i], y[i]+10, True)
             time.sleep(0.7)
             return True
     #slayer
     for i in range(3):
         if buffs[i][0] <= slayer[0]+2 and buffs[i][0] >= slayer[0]-2 and buffs[i][1] <= slayer[1]+2 and buffs[i][1] >= slayer[1]-2 and buffs[i][2] <= slayer[2]+2 and buffs[i][2] >= slayer[2]-2:
-            mouse_click_at(x[i], y[i]+10)
+            debuff_last = False
+            mouse_click_at(x[i], y[i]+10, True)
             time.sleep(0.7)
             return True
     #range
     for i in range(3):
         if buffs[i][0] <= rangee[0]+2 and buffs[i][0] >= rangee[0]-2 and buffs[i][1] <= rangee[1]+2 and buffs[i][1] >= rangee[1]-2 and buffs[i][2] <= rangee[2]+2 and buffs[i][2] >= rangee[2]-2:
-            mouse_click_at(x[i], y[i]+10)
+            debuff_last = False
+            mouse_click_at(x[i], y[i]+10, True)
             time.sleep(0.7)
             return True
     #cooldown
     for i in range(3):
         if buffs[i][0] <= cooldown[0]+2 and buffs[i][0] >= cooldown[0]-2 and buffs[i][1] <= cooldown[1]+2 and buffs[i][1] >= cooldown[1]-2 and buffs[i][2] <= cooldown[2]+2 and buffs[i][2] >= cooldown[2]-2:
-            mouse_click_at(x[i], y[i]+10)
+            debuff_last = False
+            mouse_click_at(x[i], y[i]+10, True)
             time.sleep(0.7)
             return True
+    return False
+
+    mouse_click_at(1176, 821, True)
 
 
 game_started = False
@@ -441,37 +544,37 @@ while(True):
             time.sleep(2)
     if enabled:
         if game_did_fail() == True:
-                    if global_ability() == True:
-                        continue
-                    game_start = True
-                    game_started = False
-                    boss_is_out = False
-                    talisman_needed = False
-                    toji_on_spear = False
-                    #unit stanje
-                    takorada_upgrade = 0
+            if global_ability() == True:
+                continue
+            game_start = True
+            game_started = False
+            boss_is_out = False
+            talisman_needed = False
+            toji_on_spear = False
+            #unit stanje
+            takorada_upgrade = 0
 
-                    takorada_placed = False
-                    alucard_placed = False
-                    gojo_placed = False
-                    julius_placed = False
-                    toji_placed = False
-                    sukuna_placed = False
+            takorada_placed = False
+            alucard_placed = False
+            gojo_placed = False
+            julius_placed = False
+            toji_placed = False
+            sukuna_placed = False
 
-                    #uzete kartice
-                    dodge_amount = 0
-                    strong_amount = 0
-                    press_amount = 0
-                    speed_amount = 0
-                    alucard_upgrade = 0
-                    gojo_upgrade = 0
-                    toji_upgrade = 0
-                    sukuna_upgrade = 0
-                    julius_upgrade = 0
+            #uzete kartice
+            dodge_amount = 0
+            strong_amount = 0
+            press_amount = 0
+            speed_amount = 0
+            alucard_upgrade = 0
+            gojo_upgrade = 0
+            toji_upgrade = 0
+            sukuna_upgrade = 0
+            julius_upgrade = 0
 
-                    mouse_click_at(1176, 821)
-                    time.sleep(0.1)
-                    continue
+            mouse_click_at(1176, 821, True)
+            time.sleep(0.1)
+            continue
         if restart:
             restart_game()
             restart = False
@@ -520,7 +623,7 @@ while(True):
 
                     uradeni_stage += 1
 
-                    mouse_click_at(1176, 821)
+                    mouse_click_at(1176, 821, True)
                     time.sleep(0.1)
                     continue
                 if choose_card() == True:
