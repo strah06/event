@@ -10,6 +10,8 @@ import regex as re
 import requests
 import os
 
+discord_webhook = "https://discord.com/api/webhooks/1310981065518743583/m4hon93xL7Dt2SedL8smswz3bT7s_Wo4x_6OKrQ3ZO5_cEV4rAFCgaMD5jFDmoA8ccFf"
+
 #kartice sa pocetka
 renge_dmg = 254, 126, 34
 talisman_buff = 194, 194, 254
@@ -77,8 +79,26 @@ no_boss = 115, 102, 84
 #stage
 uradeni_stage = 0
 
-def mouse_click_at(x,y):
+def screenshot():
+    image = ImageGrab.grab()
+    screenshot_path = "screenshot.png"
+    image.save(screenshot_path)
+    return screenshot_path
+
+def send_to_discord(file_path):
+    requests.post(discord_webhook, files={"file": open(file_path, "rb")}, data={"content": uradeni_stage})
+    os.remove(file_path)
+
+def mouse_click_at(x,y, card = False):
     autoit.mouse_move(x,y)
+    pixel = pag.pixel(1888, 544)
+    if pixel[0] <= card_out_checker[0]+2 and pixel[0] >= card_out_checker[0]-2 and pixel[1] <= card_out_checker[1]+2 and pixel[1] >= card_out_checker[1]-2 and pixel[2] <= card_out_checker[2]+2 and pixel[2] >= card_out_checker[2]-2:
+        print("Krecu kartice")
+        time.sleep(0.7)
+    if card == False and choose_card() == True:
+        print("Kartice pre upgrade-a")
+        time.sleep(1.5)
+        autoit.mouse_move(x,y)
     autoit.mouse_click("left")
 
 def choose_buff():
@@ -188,7 +208,6 @@ def upgrade_unit(unit):
     keyboard.press_and_release('t')
     time.sleep(0.2)
     pixel = pag.pixel(832, 823)
-    print(pixel)
     time.sleep(0.2)
     after = is_upgrade_really_upgraded()
     print(before, after)
@@ -418,8 +437,6 @@ def choose_card():
             return True
     return False
 
-    mouse_click_at(1176, 821, True)
-
 
 game_started = False
 
@@ -441,7 +458,7 @@ def init_game():
             takorada_upgrade += 1
             time.sleep(3.5)
             money = 0
-        if 1600 > 1500 and toji_placed == False and takorada_upgrade == 1:
+        if money > 1500 and toji_placed == False and takorada_upgrade == 1:
             place_unit(toji1, 5)
             toji_placed = True
             money = 0
@@ -457,7 +474,6 @@ def init_game():
 
 def game_did_fail():
     pixel = pag.pixel(game_failed_pos[0], game_failed_pos[1])
-    print(pixel)
     print(game_failed)
     if pixel[0] <= game_failed[0]+10 and pixel[0] >= game_failed[0]-10 and pixel[1] <= game_failed[1]+10 and pixel[1] >= game_failed[1]-10 and pixel[2] <= game_failed[2]+10 and pixel[2] >= game_failed[2]-10:
         print("Gotovo")
@@ -494,7 +510,6 @@ def is_upgrade_really_upgraded():
 
 def is_unit_really_placed():
     pixel = pag.pixel(unit_placed_pos[0],unit_placed_pos[1])
-    print(pag.pixel(unit_placed_pos[0],unit_placed_pos[1]))
     if pixel[0] <= unit_placed[0]+10 and pixel[0] >= unit_placed[0]-10 and pixel[1] <= unit_placed[1]+10 and pixel[1] >= unit_placed[1]-10 or pixel[0] <= unit_placed2[0]+10 and pixel[0] >= unit_placed2[0]-10 and pixel[1] <= unit_placed2[1]+10 and pixel[1] >= unit_placed2[1]-10:
         return True
     return False
@@ -544,37 +559,42 @@ while(True):
             time.sleep(2)
     if enabled:
         if game_did_fail() == True:
-            if global_ability() == True:
-                continue
-            game_start = True
-            game_started = False
-            boss_is_out = False
-            talisman_needed = False
-            toji_on_spear = False
-            #unit stanje
-            takorada_upgrade = 0
+                    if global_ability() == True:
+                        continue
+                    game_start = True
+                    game_started = False
+                    boss_is_out = False
+                    talisman_needed = False
+                    toji_on_spear = False
+                    #unit stanje
+                    takorada_upgrade = 0
 
-            takorada_placed = False
-            alucard_placed = False
-            gojo_placed = False
-            julius_placed = False
-            toji_placed = False
-            sukuna_placed = False
+                    takorada_placed = False
+                    alucard_placed = False
+                    gojo_placed = False
+                    julius_placed = False
+                    toji_placed = False
+                    sukuna_placed = False
 
-            #uzete kartice
-            dodge_amount = 0
-            strong_amount = 0
-            press_amount = 0
-            speed_amount = 0
-            alucard_upgrade = 0
-            gojo_upgrade = 0
-            toji_upgrade = 0
-            sukuna_upgrade = 0
-            julius_upgrade = 0
+                    #uzete kartice
+                    dodge_amount = 0
+                    strong_amount = 0
+                    press_amount = 0
+                    speed_amount = 0
+                    alucard_upgrade = 0
+                    gojo_upgrade = 0
+                    toji_upgrade = 0
+                    sukuna_upgrade = 0
+                    julius_upgrade = 0
 
-            mouse_click_at(1176, 821, True)
-            time.sleep(0.1)
-            continue
+                    debuff_last = False
+
+                    uradeni_stage += 1
+                    send_to_discord(screenshot())
+
+                    mouse_click_at(1176, 821, True)
+                    time.sleep(0.1)
+                    continue
         if restart:
             restart_game()
             restart = False
@@ -585,7 +605,7 @@ while(True):
                 no_buff += 1
                 time.sleep(3)
             else:
-                mouse_click_at(886, 199)
+                mouse_click_at(886, 199, True)
                 game_start = False
                 no_buff = 0
             if no_buff == 5:
@@ -621,7 +641,10 @@ while(True):
                     sukuna_upgrade = 0
                     julius_upgrade = 0
 
+                    debuff_last = False
+
                     uradeni_stage += 1
+                    send_to_discord(screenshot())
 
                     mouse_click_at(1176, 821, True)
                     time.sleep(0.1)
