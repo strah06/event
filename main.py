@@ -113,7 +113,7 @@ def choose_buff():
     talisman_buff_position = find_talisman_buff(buffs)
 
     if talisman_buff_position != None:
-        mouse_click_at(x[talisman_buff_position], y[talisman_buff_position]+10)
+        mouse_click_at(x[talisman_buff_position], y[talisman_buff_position]+10, True)
         return True
     return False
 
@@ -125,19 +125,19 @@ def find_talisman_buff(buffs):
     return None
 
 def restart_game():
-    mouse_click_at(973, 541)
+    mouse_click_at(973, 541, True)
     time.sleep(0.5)
-    mouse_click_at(886, 199)
+    mouse_click_at(886, 199, True)
     time.sleep(6)
-    mouse_click_at(30, 1009)
+    mouse_click_at(30, 1009, True)
     time.sleep(0.5)
-    mouse_click_at(1202, 498)
+    mouse_click_at(1202, 498, True)
     time.sleep(0.5)
-    mouse_click_at(849, 557)
+    mouse_click_at(849, 557, True)
     time.sleep(0.5)
-    mouse_click_at(968, 567)
+    mouse_click_at(968, 567, True)
     time.sleep(0.5)
-    mouse_click_at(1316, 182)
+    mouse_click_at(1316, 182, True)
     time.sleep(0.5)
 
 #gpt goat
@@ -260,6 +260,7 @@ def choose_card():
 
     if pixel[0] <= card_out_checker[0]+2 and pixel[0] >= card_out_checker[0]-2 and pixel[1] <= card_out_checker[1]+2 and pixel[1] >= card_out_checker[1]-2 and pixel[2] <= card_out_checker[2]+2 and pixel[2] >= card_out_checker[2]-2:
         print("Krecu kartice")
+        autoit.mouse_move(1791, 935)
         time.sleep(0.7)
     else:
         return False
@@ -393,7 +394,7 @@ def choose_card():
             return True
     #dodge
     for i in range(3):
-        if  debuff_last == False and dodge_amount < 3 and buffs[i][0] <= dodge[0]+2 and buffs[i][0] >= dodge[0]-2 and buffs[i][1] <= dodge[1]+2 and buffs[i][1] >= dodge[1]-2 and buffs[i][2] <= dodge[2]+2 and buffs[i][2] >= dodge[2]-2:
+        if  debuff_last == False and dodge_amount < 1 and buffs[i][0] <= dodge[0]+2 and buffs[i][0] >= dodge[0]-2 and buffs[i][1] <= dodge[1]+2 and buffs[i][1] >= dodge[1]-2 and buffs[i][2] <= dodge[2]+2 and buffs[i][2] >= dodge[2]-2:
             dodge_amount+=1
             mouse_click_at(x[i], y[i]+10, True)
             time.sleep(0.7)
@@ -591,7 +592,7 @@ while(True):
                     uradeni_stage += 1
                     send_to_discord(screenshot())
 
-                    mouse_click_at(1176, 821)
+                    mouse_click_at(1176, 821, True)
                     time.sleep(0.1)
                     continue
         if restart:
@@ -604,7 +605,7 @@ while(True):
                 no_buff += 1
                 time.sleep(3)
             else:
-                mouse_click_at(886, 199)
+                mouse_click_at(886, 199, True)
                 game_start = False
                 no_buff = 0
             if no_buff == 5:
@@ -645,7 +646,7 @@ while(True):
                     uradeni_stage += 1
                     send_to_discord(screenshot())
 
-                    mouse_click_at(1176, 821)
+                    mouse_click_at(1176, 821, True)
                     time.sleep(0.1)
                     continue
                 if choose_card() == True:
