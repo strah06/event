@@ -77,16 +77,6 @@ no_boss = 115, 102, 84
 #stage
 uradeni_stage = 0
 
-def screenshot():
-    image = ImageGrab.grab()
-    screenshot_path = "screenshot.png"
-    image.save(screenshot_path)
-    return screenshot_path
-
-def send_to_discord(file_path):
-    requests.post(discord_webhook, files={"file": open(file_path, "rb")}, data={"content": uradeni_stage})
-    os.remove(file_path)
-
 def mouse_click_at(x,y, card = False):
     autoit.mouse_move(x,y)
     pixel = pag.pixel(1888, 544)
@@ -456,7 +446,7 @@ def init_game():
             takorada_upgrade += 1
             time.sleep(3.5)
             money = 0
-        if money > 1500 and toji_placed == False and takorada_upgrade == 1:
+        if 1600 > 1500 and toji_placed == False and takorada_upgrade == 1:
             place_unit(toji1, 5)
             toji_placed = True
             money = 0
