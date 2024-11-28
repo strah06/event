@@ -10,8 +10,6 @@ import regex as re
 import requests
 import os
 
-discord_webhook = "https://discord.com/api/webhooks/1310981065518743583/m4hon93xL7Dt2SedL8smswz3bT7s_Wo4x_6OKrQ3ZO5_cEV4rAFCgaMD5jFDmoA8ccFf"
-
 #kartice sa pocetka
 renge_dmg = 254, 126, 34
 talisman_buff = 194, 194, 254
@@ -590,7 +588,6 @@ while(True):
                     debuff_last = False
 
                     uradeni_stage += 1
-                    send_to_discord(screenshot())
 
                     mouse_click_at(1176, 821, True)
                     time.sleep(0.1)
@@ -644,7 +641,6 @@ while(True):
                     debuff_last = False
 
                     uradeni_stage += 1
-                    send_to_discord(screenshot())
 
                     mouse_click_at(1176, 821, True)
                     time.sleep(0.1)
