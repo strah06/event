@@ -38,6 +38,7 @@ confirm_press_it = 59, 166, 73
 confirm_press_it2 = 29, 83, 36
 
 debuff_last = False
+debuff_last_count = 0
 
 card_out_checker_pos = 1888, 544
 card_out_checker = 153, 53, 55
@@ -242,7 +243,7 @@ def auto_ability(unit):
     mouse_click_at(1791, 935)
 
 def choose_card():
-    global dodge_amount,strong_amount,press_or_uncommon_amount,speed_amount,debuff_last
+    global dodge_amount,strong_amount,press_or_uncommon_amount,speed_amount,debuff_last,debuff_last_count
     x = [657,885,1117]
     y = [368,368,368]
 
@@ -369,33 +370,16 @@ def choose_card():
     for i in range(3):
         if buffs[i][0] <= harvest[0]+2 and buffs[i][0] >= harvest[0]-2 and buffs[i][1] <= harvest[1]+2 and buffs[i][1] >= harvest[1]-2 and buffs[i][2] <= harvest[2]+2 and buffs[i][2] >= harvest[2]-2:
             debuff_last = False
+            debuff_last_count += 1
             mouse_click_at(x[i], y[i]+10, True)
             time.sleep(0.7)
             return True
     #boss
     for i in range(3):
         if buffs[i][0] <= mini_boss[0]+2 and buffs[i][0] >= mini_boss[0]-2 and buffs[i][1] <= mini_boss[1]+2 and buffs[i][1] >= mini_boss[1]-2 and buffs[i][2] <= mini_boss[2]+2 and buffs[i][2] >= mini_boss[2]-2:
-            mouse_click_at(x[i], y[i]+10, True)
-            time.sleep(0.7)
-            return True
-    #speed
-    for i in range(3):
-        if debuff_last == False and speed_amount < 3 and buffs[i][0] <= speed[0]+2 and buffs[i][0] >= speed[0]-2 and buffs[i][1] <= speed[1]+2 and buffs[i][1] >= speed[1]-2 and buffs[i][2] <= speed[2]+2 and buffs[i][2] >= speed[2]-2:
-            speed_amount+=1
-            mouse_click_at(x[i], y[i]+10, True)
-            time.sleep(0.7)
-            return True
-    #strong
-    for i in range(3):
-        if debuff_last == False and strong_amount < 3 and buffs[i][0] <= strong_or_dmg[0]+2 and buffs[i][0] >= strong_or_dmg[0]-2 and buffs[i][1] <= strong_or_dmg[1]+2 and buffs[i][1] >= strong_or_dmg[1]-2 and buffs[i][2] <= strong_or_dmg[2]+2 and buffs[i][2] >= strong_or_dmg[2]-2 and ((is_strong[i][0] <= confirm_strong[0]+2 and is_strong[i][0] >= confirm_strong[0]-2 and is_strong[i][1] <= confirm_strong[1]+2 and is_strong[i][1] >= confirm_strong[1]-2 and is_strong[i][2] <= confirm_strong[2]+2 and is_strong[i][2] >= confirm_strong[2]-2) or (is_strong[i][0] <= confirm_strong2[0]+2 and is_strong[i][0] >= confirm_strong2[0]-2 and is_strong[i][1] <= confirm_strong2[1]+2 and is_strong[i][1] >= confirm_strong2[1]-2 and is_strong[i][2] <= confirm_strong2[2]+2 and is_strong[i][2] >= confirm_strong2[2]-2)):
-            strong_amount+=1
-            mouse_click_at(x[i], y[i]+10, True)
-            time.sleep(0.7)
-            return True
-    #dodge
-    for i in range(3):
-        if  debuff_last == False and dodge_amount < 1 and buffs[i][0] <= dodge[0]+2 and buffs[i][0] >= dodge[0]-2 and buffs[i][1] <= dodge[1]+2 and buffs[i][1] >= dodge[1]-2 and buffs[i][2] <= dodge[2]+2 and buffs[i][2] >= dodge[2]-2:
-            dodge_amount+=1
+            if debuff_last_count < 7:
+                debuff_last = True
+            debuff_last_count += 1
             mouse_click_at(x[i], y[i]+10, True)
             time.sleep(0.7)
             return True
@@ -404,6 +388,37 @@ def choose_card():
         if  press_or_uncommon_amount < 3 and buffs[i][0] <= press_or_uncommon[0]+2 and buffs[i][0] >= press_or_uncommon[0]-2 and buffs[i][1] <= press_or_uncommon[1]+2 and buffs[i][1] >= press_or_uncommon[1]-2 and buffs[i][2] <= press_or_uncommon[2]+2 and buffs[i][2] >= press_or_uncommon[2]-2 and ((is_press_it[i][0] <= confirm_press_it[0]+2 and is_press_it[i][0] >= confirm_press_it[0]-2 and is_press_it[i][1] <= confirm_press_it[1]+2 and is_press_it[i][1] >= confirm_press_it[1]-2 and is_press_it[i][2] <= confirm_press_it[2]+2 and is_press_it[i][2] >= confirm_press_it[2]-2) or (is_press_it[i][0] <= confirm_press_it2[0]+2 and is_press_it[i][0] >= confirm_press_it2[0]-2 and is_press_it[i][1] <= confirm_press_it2[1]+2 and is_press_it[i][1] >= confirm_press_it2[1]-2 and is_press_it[i][2] <= confirm_press_it2[2]+2 and is_press_it[i][2] >= confirm_press_it2[2]-2)):
             press_or_uncommon_amount+=1
             debuff_last = False
+            debuff_last_count += 1
+            mouse_click_at(x[i], y[i]+10, True)
+            time.sleep(0.7)
+            return True
+    #speed
+    for i in range(3):
+        if debuff_last == False and speed_amount < 3 and buffs[i][0] <= speed[0]+2 and buffs[i][0] >= speed[0]-2 and buffs[i][1] <= speed[1]+2 and buffs[i][1] >= speed[1]-2 and buffs[i][2] <= speed[2]+2 and buffs[i][2] >= speed[2]-2:
+            if debuff_last_count < 7:
+                debuff_last = True
+            debuff_last_count += 1
+            speed_amount+=1
+            mouse_click_at(x[i], y[i]+10, True)
+            time.sleep(0.7)
+            return True
+    #strong
+    for i in range(3):
+        if debuff_last == False and strong_amount < 3 and buffs[i][0] <= strong_or_dmg[0]+2 and buffs[i][0] >= strong_or_dmg[0]-2 and buffs[i][1] <= strong_or_dmg[1]+2 and buffs[i][1] >= strong_or_dmg[1]-2 and buffs[i][2] <= strong_or_dmg[2]+2 and buffs[i][2] >= strong_or_dmg[2]-2 and ((is_strong[i][0] <= confirm_strong[0]+2 and is_strong[i][0] >= confirm_strong[0]-2 and is_strong[i][1] <= confirm_strong[1]+2 and is_strong[i][1] >= confirm_strong[1]-2 and is_strong[i][2] <= confirm_strong[2]+2 and is_strong[i][2] >= confirm_strong[2]-2) or (is_strong[i][0] <= confirm_strong2[0]+2 and is_strong[i][0] >= confirm_strong2[0]-2 and is_strong[i][1] <= confirm_strong2[1]+2 and is_strong[i][1] >= confirm_strong2[1]-2 and is_strong[i][2] <= confirm_strong2[2]+2 and is_strong[i][2] >= confirm_strong2[2]-2)):
+            if debuff_last_count < 7:
+                debuff_last = True
+            debuff_last_count += 1
+            strong_amount+=1
+            mouse_click_at(x[i], y[i]+10, True)
+            time.sleep(0.7)
+            return True
+    #dodge
+    for i in range(3):
+        if  debuff_last == False and dodge_amount < 1 and buffs[i][0] <= dodge[0]+2 and buffs[i][0] >= dodge[0]-2 and buffs[i][1] <= dodge[1]+2 and buffs[i][1] >= dodge[1]-2 and buffs[i][2] <= dodge[2]+2 and buffs[i][2] >= dodge[2]-2:
+            if debuff_last_count < 7:
+                debuff_last = True
+            debuff_last_count += 1
+            dodge_amount+=1
             mouse_click_at(x[i], y[i]+10, True)
             time.sleep(0.7)
             return True
@@ -411,6 +426,7 @@ def choose_card():
     for i in range(3):
         if buffs[i][0] <= strong_or_dmg[0]+2 and buffs[i][0] >= strong_or_dmg[0]-2 and buffs[i][1] <= strong_or_dmg[1]+2 and buffs[i][1] >= strong_or_dmg[1]-2 and buffs[i][2] <= strong_or_dmg[2]+2 and buffs[i][2] >= strong_or_dmg[2]-2:
             debuff_last = False
+            debuff_last_count += 1
             mouse_click_at(x[i], y[i]+10, True)
             time.sleep(0.7)
             return True
@@ -418,6 +434,7 @@ def choose_card():
     for i in range(3):
         if buffs[i][0] <= slayer[0]+2 and buffs[i][0] >= slayer[0]-2 and buffs[i][1] <= slayer[1]+2 and buffs[i][1] >= slayer[1]-2 and buffs[i][2] <= slayer[2]+2 and buffs[i][2] >= slayer[2]-2:
             debuff_last = False
+            debuff_last_count += 1
             mouse_click_at(x[i], y[i]+10, True)
             time.sleep(0.7)
             return True
@@ -425,6 +442,7 @@ def choose_card():
     for i in range(3):
         if buffs[i][0] <= rangee[0]+2 and buffs[i][0] >= rangee[0]-2 and buffs[i][1] <= rangee[1]+2 and buffs[i][1] >= rangee[1]-2 and buffs[i][2] <= rangee[2]+2 and buffs[i][2] >= rangee[2]-2:
             debuff_last = False
+            debuff_last_count += 1
             mouse_click_at(x[i], y[i]+10, True)
             time.sleep(0.7)
             return True
@@ -432,6 +450,7 @@ def choose_card():
     for i in range(3):
         if buffs[i][0] <= cooldown[0]+2 and buffs[i][0] >= cooldown[0]-2 and buffs[i][1] <= cooldown[1]+2 and buffs[i][1] >= cooldown[1]-2 and buffs[i][2] <= cooldown[2]+2 and buffs[i][2] >= cooldown[2]-2:
             debuff_last = False
+            debuff_last_count += 1
             mouse_click_at(x[i], y[i]+10, True)
             time.sleep(0.7)
             return True
@@ -588,6 +607,7 @@ while(True):
                     julius_upgrade = 0
 
                     debuff_last = False
+                    debuff_last_count = 0
 
                     uradeni_stage += 1
                     send_to_discord(screenshot())
@@ -642,6 +662,7 @@ while(True):
                     julius_upgrade = 0
 
                     debuff_last = False
+                    debuff_last_count = 0
 
                     uradeni_stage += 1
                     send_to_discord(screenshot())
