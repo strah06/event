@@ -483,7 +483,7 @@ def init_game():
             money = 0
             time.sleep(0.2)
         if money > 2000 and toji_placed == True and takorada_upgrade == 1 and sukuna_placed == False:
-            place_unit(gojo, 6)
+            place_unit(sukuna2, 6)
             if is_unit_really_placed() == False:
                 continue
             sukuna_placed = True
