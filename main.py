@@ -483,7 +483,7 @@ def init_game():
             money = 0
             time.sleep(0.2)
         if money > 2000 and toji_placed == True and takorada_upgrade == 1 and sukuna_placed == False:
-            place_unit(sukuna1, 6)
+            place_unit(gojo, 6)
             if is_unit_really_placed() == False:
                 continue
             sukuna_placed = True
@@ -696,116 +696,7 @@ while(True):
                 money = current_money()
                 if money is None:  
                     continue
-                if money > 1500 and gojo_upgrade == 0:
-                    upgraded = upgrade_unit(gojo)
-                    time.sleep(0.2)
-                    mouse_click_at(1791, 935)
-                    if upgraded == False:
-                        continue
-                    gojo_upgrade += 1
-                    money = 0
-                    time.sleep(1)
-                    continue
-                if money > 2500 and gojo_upgrade == 1:
-                    upgraded = upgrade_unit(gojo)
-                    time.sleep(0.2)
-                    mouse_click_at(1791, 935)
-                    if upgraded == False:
-                        continue
-                    gojo_upgrade += 1
-                    money = 0
-                    time.sleep(1)
-                    continue
-                if money > 4000 and gojo_upgrade == 2:
-                    upgraded = upgrade_unit(gojo)
-                    time.sleep(0.2)
-                    mouse_click_at(1791, 935)
-                    if upgraded == False:
-                        continue
-                    gojo_upgrade += 1
-                    money = 0
-                    time.sleep(1)
-                    continue
-                if money > 5000 and gojo_upgrade == 3:
-                    upgraded = upgrade_unit(gojo)
-                    time.sleep(0.2)
-                    mouse_click_at(1791, 935)
-                    if upgraded == False:
-                        continue
-                    gojo_upgrade += 1
-                    money = 0
-                    time.sleep(1)
-                    continue
-                if money > 7500 and gojo_upgrade == 4:
-                    upgraded = upgrade_unit(gojo)
-                    time.sleep(0.2)
-                    mouse_click_at(1791, 935)
-                    if upgraded == False:
-                        continue
-                    gojo_upgrade += 1
-                    money = 0
-                    time.sleep(1)
-                    continue
-                if money > 8000 and gojo_upgrade == 5:
-                    upgraded = upgrade_unit(gojo)
-                    time.sleep(0.2)
-                    mouse_click_at(1791, 935)
-                    if upgraded == False:
-                        continue
-                    gojo_upgrade += 1
-                    money = 0
-                    time.sleep(1)
-                    continue
-                if money > 10000 and gojo_upgrade == 6:
-                    upgraded = upgrade_unit(gojo)
-                    time.sleep(0.2)
-                    mouse_click_at(1791, 935)
-                    if upgraded == False:
-                        continue
-                    gojo_upgrade += 1
-                    money = 0
-                    time.sleep(1)
-                    continue
-                if money > 11250 and gojo_upgrade == 7:
-                    upgraded = upgrade_unit(gojo)
-                    time.sleep(0.2)
-                    mouse_click_at(1791, 935)
-                    if upgraded == False:
-                        continue
-                    gojo_upgrade += 1
-                    money = 0
-                    time.sleep(1)
-                    continue
-                if money > 12500 and gojo_upgrade == 8:
-                    upgraded = upgrade_unit(gojo)
-                    time.sleep(0.2)
-                    mouse_click_at(1791, 935)
-                    if upgraded == False:
-                        continue
-                    gojo_upgrade += 1
-                    money = 0
-                    time.sleep(1)
-                    continue
-                if money > 14000 and gojo_upgrade == 9:
-                    upgraded = upgrade_unit(gojo)
-                    time.sleep(0.2)
-                    mouse_click_at(1791, 935)
-                    if upgraded == False:
-                        continue
-                    gojo_upgrade += 1
-                    money = 0
-                    time.sleep(1)
-                    continue
-                if money > 16750 and gojo_upgrade == 10:
-                    upgraded = upgrade_unit(gojo)
-                    time.sleep(0.2)
-                    mouse_click_at(1791, 935)
-                    if upgraded == False:
-                        continue
-                    gojo_upgrade += 1
-                    money = 0
-                    time.sleep(1)
-                    continue
+                
                 if money > 2000 and alucard_placed == False:
                     place_unit(alucard, 1)
                     time.sleep(0.7)
@@ -817,18 +708,8 @@ while(True):
                     money = 0
                     time.sleep(1)
                     continue
-                if money > 1800 and alucard_placed == True and gojo_placed == False:
-                    place_unit(gojo, 2)
-                    time.sleep(0.7)
-                    if is_unit_really_placed() == False:
-                        continue
-                    print("Unit placed o correctly")
-                    mouse_click_at(1791, 935)
-                    gojo_placed = True
-                    money = 0
-                    time.sleep(1)
-                    continue
-                if money > 1600 and gojo_placed == True and julius_placed == False:
+                
+                if money > 1600 and gojo_placed == False and julius_placed == False:
                     place_unit(julius, 3)
                     time.sleep(0.7)
                     if is_unit_really_placed() == False:
@@ -866,7 +747,7 @@ while(True):
                     money = 0
                     time.sleep(1)
                     continue
-                if money > 1425 and takorada_upgrade == 4 and alucard_upgrade == 0 and gojo_upgrade == 11:
+                if money > 1425 and takorada_upgrade == 4 and alucard_upgrade == 0:
                     upgraded = upgrade_unit(alucard)
                     time.sleep(0.2)
                     if upgraded == False:
@@ -876,7 +757,7 @@ while(True):
                     money = 0
                     time.sleep(1)
                     continue
-                if money > 2850 and takorada_upgrade == 4 and alucard_upgrade == 1 and gojo_upgrade == 11:
+                if money > 2850 and takorada_upgrade == 4 and alucard_upgrade == 1:
                     upgraded = upgrade_unit(alucard)
                     time.sleep(0.2)
                     mouse_click_at(1791, 935)
@@ -886,7 +767,7 @@ while(True):
                     money = 0
                     time.sleep(1)
                     continue
-                if money > 3800 and takorada_upgrade == 4 and alucard_upgrade == 2 and gojo_upgrade == 11:
+                if money > 3800 and takorada_upgrade == 4 and alucard_upgrade == 2:
                     upgraded = upgrade_unit(alucard)
                     time.sleep(0.2)
                     mouse_click_at(1791, 935)
@@ -896,7 +777,7 @@ while(True):
                     money = 0
                     time.sleep(1)
                     continue
-                if money > 4750 and takorada_upgrade == 4 and alucard_upgrade == 3 and gojo_upgrade == 11:
+                if money > 4750 and takorada_upgrade == 4 and alucard_upgrade == 3:
                     upgraded = upgrade_unit(alucard)
                     time.sleep(0.2)
                     mouse_click_at(1791, 935)
@@ -907,17 +788,138 @@ while(True):
                     money = 0
                     time.sleep(1)
                     continue
-                if money > 2000 and sukuna_placed == False:
-                    place_unit(sukuna2, 6)
+                if money > 2000 and sukuna_placed == True:
+                    time.sleep(0.7)
+                    
+                    print("Unit placed o correctly")
+                    mouse_click_at(1791, 935)
+                    sukuna_placed = True
+                    sell_unit(sukuna1)
+                    money = 0
+                    time.sleep(1)
+                    continue
+                if money > 1800 and alucard_placed == True and gojo_placed == False:
+                    place_unit(gojo, 2)
                     time.sleep(0.7)
                     if is_unit_really_placed() == False:
                         continue
                     print("Unit placed o correctly")
                     mouse_click_at(1791, 935)
-                    sukuna_placed = True
+                    gojo_placed = True
                     money = 0
                     time.sleep(1)
                     continue
+                if money > 1500 and gojo_upgrade == 0 and takorada_upgrade == 4 and alucard_upgrade == 4:
+                    upgraded = upgrade_unit(gojo)
+                    time.sleep(0.2)
+                    mouse_click_at(1791, 935)
+                    if upgraded == False:
+                        continue
+                    gojo_upgrade += 1
+                    money = 0
+                    time.sleep(1)
+                    continue
+                if money > 2500 and gojo_upgrade == 1 and takorada_upgrade == 4 and alucard_upgrade == 4:
+                    upgraded = upgrade_unit(gojo)
+                    time.sleep(0.2)
+                    mouse_click_at(1791, 935)
+                    if upgraded == False:
+                        continue
+                    gojo_upgrade += 1
+                    money = 0
+                    time.sleep(1)
+                    continue
+                if money > 4000 and gojo_upgrade == 2 and takorada_upgrade == 4 and alucard_upgrade == 4:
+                    upgraded = upgrade_unit(gojo)
+                    time.sleep(0.2)
+                    mouse_click_at(1791, 935)
+                    if upgraded == False:
+                        continue
+                    gojo_upgrade += 1
+                    money = 0
+                    time.sleep(1)
+                    continue
+                if money > 5000 and gojo_upgrade == 3 and takorada_upgrade == 4 and alucard_upgrade == 4:
+                    upgraded = upgrade_unit(gojo)
+                    time.sleep(0.2)
+                    mouse_click_at(1791, 935)
+                    if upgraded == False:
+                        continue
+                    gojo_upgrade += 1
+                    money = 0
+                    time.sleep(1)
+                    continue
+                if money > 7500 and gojo_upgrade == 4 and takorada_upgrade == 4 and alucard_upgrade == 4:
+                    upgraded = upgrade_unit(gojo)
+                    time.sleep(0.2)
+                    mouse_click_at(1791, 935)
+                    if upgraded == False:
+                        continue
+                    gojo_upgrade += 1
+                    money = 0
+                    time.sleep(1)
+                    continue
+                if money > 8000 and gojo_upgrade == 5 and takorada_upgrade == 4 and alucard_upgrade == 4:
+                    upgraded = upgrade_unit(gojo)
+                    time.sleep(0.2)
+                    mouse_click_at(1791, 935)
+                    if upgraded == False:
+                        continue
+                    gojo_upgrade += 1
+                    money = 0
+                    time.sleep(1)
+                    continue
+                if money > 10000 and gojo_upgrade == 6 and takorada_upgrade == 4 and alucard_upgrade == 4:
+                    upgraded = upgrade_unit(gojo)
+                    time.sleep(0.2)
+                    mouse_click_at(1791, 935)
+                    if upgraded == False:
+                        continue
+                    gojo_upgrade += 1
+                    money = 0
+                    time.sleep(1)
+                    continue
+                if money > 11250 and gojo_upgrade == 7 and takorada_upgrade == 4 and alucard_upgrade == 4:
+                    upgraded = upgrade_unit(gojo)
+                    time.sleep(0.2)
+                    mouse_click_at(1791, 935)
+                    if upgraded == False:
+                        continue
+                    gojo_upgrade += 1
+                    money = 0
+                    time.sleep(1)
+                    continue
+                if money > 12500 and gojo_upgrade == 8 and takorada_upgrade == 4 and alucard_upgrade == 4:
+                    upgraded = upgrade_unit(gojo)
+                    time.sleep(0.2)
+                    mouse_click_at(1791, 935)
+                    if upgraded == False:
+                        continue
+                    gojo_upgrade += 1
+                    money = 0
+                    time.sleep(1)
+                    continue
+                if money > 14000 and gojo_upgrade == 9 and takorada_upgrade == 4 and alucard_upgrade == 4:
+                    upgraded = upgrade_unit(gojo)
+                    time.sleep(0.2)
+                    mouse_click_at(1791, 935)
+                    if upgraded == False:
+                        continue
+                    gojo_upgrade += 1
+                    money = 0
+                    time.sleep(1)
+                    continue
+                if money > 16750 and gojo_upgrade == 10 and takorada_upgrade == 4 and alucard_upgrade == 4:
+                    upgraded = upgrade_unit(gojo)
+                    time.sleep(0.2)
+                    mouse_click_at(1791, 935)
+                    if upgraded == False:
+                        continue
+                    gojo_upgrade += 1
+                    money = 0
+                    time.sleep(1)
+                    continue
+                
                 if money > 10000 and takorada_upgrade == 4:
                     upgraded = upgrade_unit(takorada)
                     mouse_click_at(1791, 935)
@@ -990,7 +992,7 @@ while(True):
                     money = 0
                     time.sleep(1)
                     continue
-                        
+                
                 if money > 19000 and alucard_upgrade == 10 and gojo_upgrade == 11:
                     upgraded = upgrade_unit(alucard)
                     time.sleep(0.2)
